@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import xlwt
 import xlrd
+import myLogging
 
 fmts = [
 	'YY/MM/DD'
@@ -8,6 +9,9 @@ fmts = [
 
 IGNORE_NAME = [u'基础信息']
 
+"""
+	合并多张xls表格为一张
+"""
 def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 	# 生成一个xls对象
 	xls_file = xlwt.Workbook()
@@ -33,6 +37,10 @@ def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 						sheet_xls.write(0,col,value)
 
 					xls_sheet_content_index[sheet_name] = 0
+
+			# 日志输出:
+			myLogging.logging.info("init sheet and title content.")
+
 		
 		# 初始化内容
 		#print xls_sheet_dic
@@ -59,14 +67,27 @@ def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 				# 偏移量除去第一行
 				xls_sheet_content_index[sheet_name] += sheet_rows -1
 
+		# 日志输出:
+		myLogging.logging.info(file_name+" merge to"+to_file_name + " succefull...")
+
 	xls_file.save(to_file_name)
 
+
+"""
+	汇总一周数据总项
+"""
+def getSumWeeklyXlsFile(from_file_name,to_file_name):
+	#file_book = open_workbook(from_file_name)
+	# sheet表格内容
+	#table = file_book.sheet_by_index(sheet_index)
+	pass
 
 def testMergeMoreXlfFileData():
 	from_file_names = ["./data/2016.4.11.xlsx","./data/2016.4.12.xlsx","./data/2016.4.13.xlsx","./data/2016.4.14.xlsx","./data/2016.4.15.xlsx","./data/2016.4.16.xlsx","./data/2016.4.17.xlsx"]
 	to_file_name = u"./data/4月/3.xls"
+	myLogging.logging.info("Merge File Xls staring...")
 	mergeMoreXlfFileData(from_file_names,to_file_name)
-
+	myLogging.logging.info("Merge File Xls succefull")
 
 testMergeMoreXlfFileData()
 
