@@ -1,16 +1,9 @@
 # -*- coding: utf-8 -*-
 import xlwt
 import xlrd
-import readXlsFile
-import os
-
-from xlutils.copy import copy;
-
-
-style_date = xlwt.easyxf(num_format_str='YY/MM/DD')
 
 fmts = [
-	'YY/MM/DD',
+	'YY/MM/DD'
  ]
 
 IGNORE_NAME = [u'基础信息']
@@ -55,8 +48,13 @@ def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 				for row_index in range(1, sheet_rows):
 					line_data_value = from_xls_sheet.row_values(row_index)
 					for col,value in enumerate(line_data_value):
-						
-						sheet_xls.write(row_index+xls_sheet_content_index[sheet_name],col,value)
+						# 输入格式化 to do list
+						if from_xls_sheet.row_types(row_index)[col] == 3:
+							style = xlwt.XFStyle()
+							style.num_format_str = fmts[0]
+							sheet_xls.write(row_index+xls_sheet_content_index[sheet_name],col,value,style)
+						else:
+							sheet_xls.write(row_index+xls_sheet_content_index[sheet_name],col,value)
 						
 				# 偏移量除去第一行
 				xls_sheet_content_index[sheet_name] += sheet_rows -1
