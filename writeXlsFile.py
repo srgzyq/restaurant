@@ -4,10 +4,14 @@ import xlrd
 import myLogging
 
 fmts = [
-	'YY/MM/DD'
+	'YY/MM/DD',
+	u'星期aaa'
  ]
 
 IGNORE_NAME = [u'基础信息']
+SUM_INCOME_TITLE_LIST = [u'日期',u'星期',u'刷卡',u'现金',u'支付宝',u'微信',u'大众闪惠',u'糯米']
+PAY_BUY_LIST = [u'刷卡',u'现金',u'支付宝',u'微信',u'大众闪惠',u'糯米']
+DATA_SHEET_NAME= [u'流水']
 
 """
 	合并多张xls表格为一张
@@ -87,12 +91,15 @@ def sumWeeklyIncomeXlsFile(from_file_name):
 		# 天数 to do list income总收入
 		if weekly_dic.get(line_data_value[0]) == None:
 			weekly_dic[line_data_value[0]] = {}
-		# 收入9 支付类型 8
-		if weekly_dic[line_data_value[0]].get(line_data_value[8]) == None:
-			weekly_dic[line_data_value[0]][line_data_value[8]] = 0
+			for pay_buy_name in PAY_BUY_LIST:
+				weekly_dic[line_data_value[0]][pay_buy_name] = 0
 
-		weekly_dic[line_data_value[0]][line_data_value[8]] += line_data_value[9]
-		
+		try:
+			weekly_dic[line_data_value[0]][line_data_value[8]] += line_data_value[9]
+		except (ValueError,KeyError):
+			error_key = line_data_value[8]
+			myLogging.logging.info("key "+ error_key + " PAY_BUY_LIST:" + " ".join(PAY_BUY_LIST))
+
 	return weekly_dic
 
 def saveSumWeeklyXls(from_file_name,to_file_name):
@@ -100,10 +107,9 @@ def saveSumWeeklyXls(from_file_name,to_file_name):
 
 	# 生成一个xls对象
 	xls_file = xlwt.Workbook()
-	sheet = xls_file.add_sheet('income')
-	title_list = [u'日期',u'刷卡',u'现金',u'支付宝',u'微信',u'大众闪惠',u'糯米']
-	
-	initSheetTile(sheet,title_list)
+	sheet = xls_file.add_sheet(DATA_SHEET_NAME[0])
+
+	initSheetTile(sheet,SUM_INCOME_TITLE_LIST)
 
 	row = 1
 	for key,value in weekly_dic.items(): 
@@ -111,10 +117,15 @@ def saveSumWeeklyXls(from_file_name,to_file_name):
 		style = xlwt.XFStyle()
 		style.num_format_str = fmts[0]
 		sheet.write(row,col,key,style)
+		style.num_format_str = fmts[1]
+		sheet.write(row,col+1,key,style)
 		for inncome_type,value in value.items():
-			col = title_list.index(inncome_type)
-			sheet.write(row,col,value)
-		
+			try:
+				col = SUM_INCOME_TITLE_LIST.index(inncome_type)
+				sheet.write(row,col,value)
+			except ValueError:
+				myLogging.logging.info("from_file_name:"+from_file_name+" inncome_type "+ inncome_type + "error")
+
 		row += 1
 		
 	xls_file.save(to_file_name)
@@ -135,7 +146,7 @@ def testMergeMoreXlfFileData():
 def testSumWeeklyIncomeXlsFile():
 	myLogging.logging.info("Sum File Xls staring...")
 	from_file_name = u"./data/4月/3.xls"
-	to_file_name = u"./data/4月/income.xls"
+	to_file_name = u"./data/4月/第一周汇总.xls"
 	saveSumWeeklyXls(from_file_name,to_file_name)
 	#sumWeeklyIncomeXlsFile(from_file_name)
 
