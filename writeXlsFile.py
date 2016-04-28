@@ -33,14 +33,12 @@ def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 
 					# 初始化每一个 sheet title 内容
 					sheet_content = from_xls_file.sheet_by_index(sheet_index)
-					for col,value in enumerate(sheet_content.row_values(0)):
-						sheet_xls.write(0,col,value)
+					initSheetTile(sheet_xls,sheet_content.row_values(0))
 
 					xls_sheet_content_index[sheet_name] = 0
 
 			# 日志输出:
 			myLogging.logging.info("init sheet and title content.")
-
 		
 		# 初始化内容
 		#print xls_sheet_dic
@@ -76,11 +74,56 @@ def mergeMoreXlfFileData(from_file_name_list,to_file_name):
 """
 	汇总一周数据总项
 """
-def getSumWeeklyXlsFile(from_file_name,to_file_name):
-	#file_book = open_workbook(from_file_name)
+def sumWeeklyIncomeXlsFile(from_file_name):
+	xls_file = xlrd.open_workbook(from_file_name)
 	# sheet表格内容
-	#table = file_book.sheet_by_index(sheet_index)
-	pass
+	sheet = xls_file.sheet_by_index(0)
+	# sheet表格行列数
+	sheet_rows,sheet_cols = sheet.nrows,sheet.ncols
+
+	weekly_dic = {}
+	for row_index in range(1, sheet_rows):
+		line_data_value = sheet.row_values(row_index)
+		# 天数 to do list income总收入
+		if weekly_dic.get(line_data_value[0]) == None:
+			weekly_dic[line_data_value[0]] = {}
+		# 收入9 支付类型 8
+		if weekly_dic[line_data_value[0]].get(line_data_value[8]) == None:
+			weekly_dic[line_data_value[0]][line_data_value[8]] = 0
+
+		weekly_dic[line_data_value[0]][line_data_value[8]] += line_data_value[9]
+		
+	return weekly_dic
+
+def saveSumWeeklyXls(from_file_name,to_file_name):
+	weekly_dic = sumWeeklyIncomeXlsFile(from_file_name)
+
+	# 生成一个xls对象
+	xls_file = xlwt.Workbook()
+	sheet = xls_file.add_sheet('income')
+	title_list = [u'日期',u'刷卡',u'现金',u'支付宝',u'微信',u'大众闪惠',u'糯米']
+	
+	initSheetTile(sheet,title_list)
+
+	row = 1
+	for key,value in weekly_dic.items(): 
+		col = 0
+		style = xlwt.XFStyle()
+		style.num_format_str = fmts[0]
+		sheet.write(row,col,key,style)
+		for inncome_type,value in value.items():
+			col = title_list.index(inncome_type)
+			sheet.write(row,col,value)
+		
+		row += 1
+		
+	xls_file.save(to_file_name)
+
+def initSheetTile(sheet_xls,title_list):
+	# 初始化每一个 sheet title 内容
+	for col,value in enumerate(title_list):
+		sheet_xls.write(0,col,value)
+	return sheet_xls
 
 def testMergeMoreXlfFileData():
 	from_file_names = ["./data/2016.4.11.xlsx","./data/2016.4.12.xlsx","./data/2016.4.13.xlsx","./data/2016.4.14.xlsx","./data/2016.4.15.xlsx","./data/2016.4.16.xlsx","./data/2016.4.17.xlsx"]
@@ -89,7 +132,15 @@ def testMergeMoreXlfFileData():
 	mergeMoreXlfFileData(from_file_names,to_file_name)
 	myLogging.logging.info("Merge File Xls succefull")
 
-testMergeMoreXlfFileData()
+def testSumWeeklyIncomeXlsFile():
+	myLogging.logging.info("Sum File Xls staring...")
+	from_file_name = u"./data/4月/3.xls"
+	to_file_name = u"./data/4月/income.xls"
+	saveSumWeeklyXls(from_file_name,to_file_name)
+	#sumWeeklyIncomeXlsFile(from_file_name)
+
+#testMergeMoreXlfFileData()
+testSumWeeklyIncomeXlsFile()
 
 
 
