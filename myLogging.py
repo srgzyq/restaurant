@@ -2,10 +2,10 @@ import logging
 
 # set up logging to file - see previous section for more details
 logging.basicConfig(level=logging.DEBUG,
-					format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-					datefmt='%m-%d %H:%M',
-					filename='./temp/mylog.log',
-					filemode='w')
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='./temp/mylog.log',
+                    filemode='w')
 
 
 # define a Handler which writes INFO messages or higher to the sys.stderr
