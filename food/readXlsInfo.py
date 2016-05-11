@@ -1,15 +1,30 @@
 # -*- coding: utf-8 -*-
 from xlrd import open_workbook
+from config import IGNORE_SHEETS
+import myLogging
 
 
 class ReadXlsInfo(object):
 
     def __init__(self, file_name):
         super(ReadXlsInfo, self).__init__()
-        self.xls_file = open_workbook(file_name)
+        try:
+            self.file_name = file_name
+            self.xls_file = open_workbook(file_name)
+        except IOError:
+            # 日志输出:
+            myLogging.logging.error("No such file or directory: " + file_name)
+
+    def getFileName(self):
+        return self.file_name
 
     def getXlsSheetsName(self):
-        return self.xls_file.sheet_names()
+        names = self.xls_file.sheet_names()
+        result = []
+        for name in names:
+            if name not in IGNORE_SHEETS:
+                result.append(name)
+        return result
 
     def getXlsSheetsTitle(self, name):
         sheet = self.xls_file.sheet_by_name(name)

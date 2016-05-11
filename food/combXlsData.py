@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-TITLE_KEY = 'title'
-CONTENT_KEY = 'content'
 
+from config import TITLE_KEY, CONTENT_KEY
+import myLogging
 
 class CombXlsData(object):
 
@@ -45,9 +45,15 @@ class CombXlsData(object):
 
     def mergeTableContent(self):
         result = self.result
+        assert len(result) != 0, "result is None"
         for xlsData in self.doMergeData:
             sheetDatas = xlsData.getXlsSheetsInfo()
             for sheetName, sheetContents in sheetDatas:
-                sheetCon = result[sheetName][CONTENT_KEY]
+                try:
+                    lines = result[sheetName][CONTENT_KEY]
+                except KeyError:
+                    myLogging.logging.error("fileName:"+xlsData.getFileName() + " sheetName is error: " + sheetName)
+       
+
                 for line in sheetContents:
-                    sheetCon.append(line)
+                    lines.append(line)
