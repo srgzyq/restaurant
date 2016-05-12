@@ -21,6 +21,8 @@ if __name__ == '__main__':
   	
   	# 合并
     mergeData = comb.mergeData()
+
+    # 写入文件
     fileName = DIR_PATH+"all.xls"
     writeXls = WriteXlsData(mergeData)
     writeXls.wirteDataToXlsFile(fileName)

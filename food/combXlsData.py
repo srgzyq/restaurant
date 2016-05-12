@@ -4,6 +4,7 @@
 from config import TITLE_KEY, CONTENT_KEY
 import myLogging
 
+
 class CombXlsData(object):
 
     """docstring for CombXlsData"""
@@ -52,8 +53,9 @@ class CombXlsData(object):
                 try:
                     lines = result[sheetName][CONTENT_KEY]
                 except KeyError:
-                    myLogging.logging.error("fileName:"+xlsData.getFileName() + " sheetName is error: " + sheetName)
-       
+                    myLogging.logging.error(
+                        "fileName:" + xlsData.getFileName() + " sheetName is error: " + sheetName)
 
                 for line in sheetContents:
                     lines.append(line)
+            myLogging.logging.info("Merge xls file in Dic:"+xlsData.getFileName()+" succeed.")

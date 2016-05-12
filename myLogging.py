@@ -12,12 +12,14 @@ logging.basicConfig(level=logging.DEBUG,
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 # set a format which is simpler for console user
-formatter = logging.Formatter('''%(asctime)-10s: %(levelname)-8s %(message)-8s filename:%(filename)-10s funcName:%(funcName)-8s linenum:%(lineno)-8d''')
+formatter = logging.Formatter('%(asctime)-10s: %(levelname)-8s %(message)-8s ')
 console.setFormatter(formatter)
 # add the handler to the root logger
 logging.getLogger('').addHandler(console)
 
 consoleError = logging.StreamHandler()
 consoleError.setLevel(logging.ERROR)
-consoleError.setFormatter(formatter)
+formatterError = logging.Formatter('''%(asctime)-10s: %(levelname)-8s %(message)-8s filename:%(filename)-10s funcName:%(funcName)-8s linenum:%(lineno)-8d''')
+
+consoleError.setFormatter(formatterError)
 logging.getLogger('ERROR').addHandler(consoleError)

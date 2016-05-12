@@ -11,6 +11,7 @@ class ReadXlsInfo(object):
         try:
             self.file_name = file_name
             self.xls_file = open_workbook(file_name)
+            myLogging.logging.info("Read xls file from: " + file_name + " succeed.")
         except IOError:
             # 日志输出:
             myLogging.logging.error("No such file or directory: " + file_name)

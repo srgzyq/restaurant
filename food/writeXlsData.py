@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from xlwt import Workbook, XFStyle
 from config import TITLE_KEY, CONTENT_KEY
-
+import myLogging
 
 class WriteXlsData(object):
 
@@ -25,6 +25,7 @@ class WriteXlsData(object):
             self.initSheetContent(xlsSheet, sheetContent)
 
         xlsData.save(fileName)
+        myLogging.logging.info("Save xls file:"+fileName+" succeed.")
 
     def initSheetTitle(self, xlsSheet, sheetTitle):
         # 初始化每一个 sheet title 内容
