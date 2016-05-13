@@ -5,6 +5,7 @@ FILE_END = "xlsx"
 WEEK_DAY_NUM = 7
 LAST_MONTH_NUM = 12
 
+
 def getFileNameList(start, step=7):
     datelist = start.split(".")
     year = int(datelist[0])
@@ -39,55 +40,52 @@ def getWeekInfoList(year, month):
     # 一月天数lastday
     # _sundays 每周的日历
     _sundays = [x for x in range(6 - weekday + 1, lastday + 1, WEEK_DAY_NUM)]
-    #print _sundays
+    # print _sundays
 
-    monthlist = range(1, lastday + 1)
+    monthList = range(1, lastday + 1)
     weeks = []
 
     for index in range(len(_sundays) + 1):
         if index == 0:
-            weeks.append(monthlist[0:_sundays[index]])
+            weeks.append(monthList[0:_sundays[index]])
         elif index == len(_sundays) and _sundays[index - 1] != lastday:
-            weeks.append(monthlist[_sundays[index - 1]:])
+            weeks.append(monthList[_sundays[index - 1]:])
         elif index != len(_sundays):
-            weeks.append(monthlist[_sundays[index - 1]:_sundays[index]])
+            weeks.append(monthList[_sundays[index - 1]:_sundays[index]])
 
     return weeks
 
-def getAllWeekInfoList(year,month):
-    curMonth = getWeekInfoList(year,month)
-    #print curMonth
+
+def getAllWeekInfoList(year, month):
+    curMonth = getWeekInfoList(year, month)
+   
+    # print curMonth
     monthList = curMonth[:]
     # 完整的一周结尾
-    if len(curMonth[len(curMonth)-1]) != WEEK_DAY_NUM:
-        nextMonthNum = month%LAST_MONTH_NUM+1
+    if len(curMonth[len(curMonth) - 1]) != WEEK_DAY_NUM:
+        nextMonthNum = month % LAST_MONTH_NUM + 1
         nextYear = year
-        if month%LAST_MONTH_NUM == 0:
+        if month % LAST_MONTH_NUM == 0:
             nextYear += 1
-        nextMonth = getWeekInfoList(nextYear,nextMonthNum)
+        # 下个月的开头
+        nextMonth = getWeekInfoList(nextYear, nextMonthNum)
         monthList = curMonth[:len(curMonth)]
-        monthList.append(curMonth[len(curMonth)-1]+nextMonth[0])
+        monthList[len(monthList) - 1] += nextMonth[0] 
+        #monthList.append(curMonth[len(curMonth) - 1] + nextMonth[0])
 
-    # 格式化
+    #print monthList
     return monthList
 
-def test_getWeekInfoList():
-    w = getWeekInfoList(2016, 5)
-    #print w
-    assert len(w[0]) == 1 ,'first is one'
-    assert len(w[len(w)-1]) == 2 ,'last is one'
-    assert len(w) == 6 ,'last is one'
-    w = getWeekInfoList(2015, 5)
-    assert len(w[len(w)-1]) == 7, 'last is all week' 
-    w = getWeekInfoList(2015,6)
-    assert len(w[0]) == 7, 'first is all week'
-    #print w
-
-if __name__ == '__main__':
-    #getAllWeekInfoList(2016,8)
-    print getAllWeekInfoList(2016,4)
-    #getAllWeekInfoList(2016,12)
-    #getAllWeekInfoList(2015,5)
-    #print getWeekInfoList(2015,6)
-    #test_getWeekInfoList()
-    
+def getFormatDate(year, month):
+    monthList = getAllWeekInfoList(year, month)
+    #print monthList
+    result = []
+    for weeks in monthList:
+        weekList  = []
+        for day in weeks:
+            datestr = ".".join([str(year), str(month), str(day), FILE_END])
+            weekList.append(datestr)
+        result.append(weekList)
+    #    print  weeks
+    print result   
+    return monthList
