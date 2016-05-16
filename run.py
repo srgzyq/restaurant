@@ -12,7 +12,7 @@ OUTPUT_FILE = ""
 
 if __name__ == '__main__':
 
-    fileNames = getFileNameList("2016.5.9",5)
+    fileNames = getFileNameList("2016.5.9",7)
     dirFileNames = getDirFileNameList(fileNames, DIR_PATH)
     #print dirFileNames
     
