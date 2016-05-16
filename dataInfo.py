@@ -7,7 +7,7 @@ SEPARATE_SIGN = "."
 WEEK_DAY_NUM = 7
 LAST_MONTH_NUM = 12
 
-
+'''
 def getFileNameList(start, step=7):
     datelist = start.split(".")
     year = int(datelist[0])
@@ -25,12 +25,13 @@ def getFileNameList(start, step=7):
         datestr = ".".join([str(year), str(month), str(day), FILE_END])
         result.append(datestr)
     return result
+'''
 
 
 def getDirFileNameList(fileList, dirName):
     result = []
     for fileName in fileList:
-        result.append(os.path.join(dirName,fileName))
+        result.append(os.path.join(dirName, fileName))
     return result
 
 # 周月按照周日划分日期
@@ -107,3 +108,7 @@ def getFormatDate(year, month):
         result.append(weekList)
 
     return result
+
+
+def getNumWeek(year, month, num):
+    return getFormatDate(year, month)[num - 1]
