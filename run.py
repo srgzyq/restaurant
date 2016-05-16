@@ -5,17 +5,17 @@ from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
 from dataInfo import getFileNameList, getDirFileNameList
 
-DIR_PATH = "./data/"
+DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据/"   #"./data/"
 INPUT_FILE_LIST = []
 OUTPUT_FILE = ""
 
 
 if __name__ == '__main__':
 
-    fileNames = getFileNameList("2016.4.25",6)
+    fileNames = getFileNameList("2016.5.9",5)
     dirFileNames = getDirFileNameList(fileNames, DIR_PATH)
-    print dirFileNames
-    '''
+    #print dirFileNames
+    
     comb = CombXlsData()
     for xlsfileName in dirFileNames:
     	xlsFile = ReadXlsInfo(xlsfileName)
@@ -25,9 +25,9 @@ if __name__ == '__main__':
     mergeData = comb.mergeData()
 
     # 写入文件
-    fileName = DIR_PATH+"all.xls"
+    fileName = DIR_PATH+"汇总/"+"5_3_week.xls"
     writeXls = WriteXlsData(mergeData)
     writeXls.wirteDataToXlsFile(fileName)
 
 
-    '''
+    
