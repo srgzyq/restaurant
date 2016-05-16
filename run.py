@@ -3,7 +3,7 @@
 from food.readXlsInfo import ReadXlsInfo
 from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
-from dataInfo import getFileNameList, getDirFileNameList
+from dataInfo import getDirFileNameList, getNumWeek
 import os
 
 DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据"
@@ -15,10 +15,10 @@ OUTPUT_FILE = ""
 
 if __name__ == '__main__':
 
-    fileNames = getFileNameList("2016.5.9", 7)
+    fileNames = getNumWeek(2016, 5, 3)
+
     read_xls_file = os.path.join(DIR_PATH, READ_PATH)
     dirFileNames = getDirFileNameList(fileNames, read_xls_file)
-    # print dirFileNames
 
     comb = CombXlsData()
     for xlsfileName in dirFileNames:
