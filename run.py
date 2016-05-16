@@ -14,6 +14,8 @@ if __name__ == '__main__':
 
     fileNames = getFileNameList("2016.4.25",6)
     dirFileNames = getDirFileNameList(fileNames, DIR_PATH)
+    print dirFileNames
+    '''
     comb = CombXlsData()
     for xlsfileName in dirFileNames:
     	xlsFile = ReadXlsInfo(xlsfileName)
@@ -28,4 +30,4 @@ if __name__ == '__main__':
     writeXls.wirteDataToXlsFile(fileName)
 
 
-
+    '''

@@ -2,8 +2,8 @@ import unittest
 
 
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append("..")
+#import sys
+#sys.path.append("..")
 
 from dataInfo import getWeekInfoList, getAllWeekInfoList, getFormatDate
 

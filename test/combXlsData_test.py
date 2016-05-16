@@ -2,8 +2,8 @@ import unittest
 import FakeData
 
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append("..")
+#import sys
+#sys.path.append("..")
 
 from food.combXlsData import CombXlsData
 

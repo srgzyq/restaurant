@@ -1,8 +1,8 @@
 import unittest
 import FakeData
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append("..")
+#import sys
+#sys.path.append("..")
 from config import CONTENT_KEY
 from food.writeXlsData import WriteXlsData
 from food.readXlsInfo import ReadXlsInfo
