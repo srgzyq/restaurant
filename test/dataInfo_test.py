@@ -3,7 +3,7 @@ import unittest
 
 # -*- coding: utf-8 -*-
 #import sys
-#sys.path.append("..")
+# sys.path.append("..")
 
 from dataInfo import getWeekInfoList, getAllWeekInfoList, getFormatDate
 
@@ -47,8 +47,13 @@ class TestDataInfo(unittest.TestCase):
 
     def test_getFormatDate(self):
         r = getFormatDate(2016, 4)
-        #print r
-        #print len(r)
+        self.assertEquals(len(r), 5)
+        self.assertEquals(r[len(r) - 1], ['2016.4.25.xlsx', '2016.4.26.xlsx', '2016.4.27.xlsx',
+                                          '2016.4.28.xlsx', '2016.4.29.xlsx', '2016.4.30.xlsx', '2016.5.1.xlsx'])
+        r = getFormatDate(2015, 12)
+        self.assertEquals(r[4], ['2015.12.28.xlsx', '2015.12.29.xlsx', '2015.12.30.xlsx',
+                                 '2015.12.31.xlsx', '2016.1.1.xlsx', '2016.1.2.xlsx', '2016.1.3.xlsx'])
+
 
 if __name__ == '__main__':
     unittest.main()

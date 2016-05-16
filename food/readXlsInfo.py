@@ -15,6 +15,7 @@ class ReadXlsInfo(object):
         except IOError:
             # 日志输出:
             myLogging.logging.error("No such file or directory: " + file_name)
+            exit()
 
     def getFileName(self):
         return self.file_name

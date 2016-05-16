@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import calendar
+import os
 
 FILE_END = "xlsx"
-#SEPARATE_
-#separate
+SEPARATE_SIGN = "."
 WEEK_DAY_NUM = 7
 LAST_MONTH_NUM = 12
 
@@ -30,7 +30,7 @@ def getFileNameList(start, step=7):
 def getDirFileNameList(fileList, dirName):
     result = []
     for fileName in fileList:
-        result.append(dirName + fileName)
+        result.append(os.path.join(dirName,fileName))
     return result
 
 # 周月按照周日划分日期
@@ -60,7 +60,7 @@ def getWeekInfoList(year, month):
 
 def getAllWeekInfoList(year, month):
     curMonth = getWeekInfoList(year, month)
-   
+
     # print curMonth
     monthList = curMonth[:]
     # 完整的一周结尾
@@ -72,22 +72,38 @@ def getAllWeekInfoList(year, month):
         # 下个月的开头
         nextMonth = getWeekInfoList(nextYear, nextMonthNum)
         monthList = curMonth[:len(curMonth)]
-        monthList[len(monthList) - 1] += nextMonth[0] 
+        monthList[len(monthList) - 1] += nextMonth[0]
         #monthList.append(curMonth[len(curMonth) - 1] + nextMonth[0])
 
-    #print monthList
+    # print monthList
     return monthList
+
 
 def getFormatDate(year, month):
     monthList = getAllWeekInfoList(year, month)
-    #print monthList
+    weekday, lastday = calendar.monthrange(year, month)
+    isNextMonth = False
+    isNextYear = (month % LAST_MONTH_NUM == 0)
+    curMonth = month
+    curYear = year
     result = []
     for weeks in monthList:
-        weekList  = []
+        weekList = []
         for day in weeks:
-            datestr = ".".join([str(year), str(month), str(day), FILE_END])
+            # 跨年 # 跨月
+            if isNextMonth and not isNextYear:
+                curMonth = month + 1
+            elif isNextMonth and isNextYear:
+                curMonth = 1
+                curYear = year + 1
+
+            datestr = SEPARATE_SIGN.join(
+                [str(curYear), str(curMonth), str(day), FILE_END])
             weekList.append(datestr)
+
+            if day == lastday:
+                isNextMonth = True
+
         result.append(weekList)
-    #    print  weeks
-    print result   
-    return monthList
+
+    return result
