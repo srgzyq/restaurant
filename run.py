@@ -7,15 +7,7 @@ from dataInfo import getDirFileNameList, getNumWeek
 import os
 import re
 from time import sleep, strftime
-
-DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据"
-READ_PATH = "原数据"
-WRITH_PATH = "汇总"
-INPUT_FILE_LIST = []
-OUTPUT_FILE = ""
-USER_FIRST_NAME = "srgzyq"
-# 2016/5/3
-DATE_RE = "^\d{4}/([0][1-9]|[1-9]|[1][0-2])/([1-9]|0[1-9]|[1-3][0-9])$"
+from config import DIR_PATH, READ_PATH, WRITH_PATH, USER_FIRST_NAME, DATE_RE, FILE_XLS_END, SEPARATE_SIGN
 
 
 def welcome():
@@ -41,7 +33,9 @@ def combMoreXleToOne(year, month, weekNum):
 
     # 写入文件
     # DIR_PATH + "汇总/" + "5_3_week.xls"
-    fileName = os.path.join(os.path.join(DIR_PATH, WRITH_PATH), "5_3_week.xls")
+    outFileName = "_".join([str(month), str(weekNum), "week"]
+                           ) + SEPARATE_SIGN + FILE_XLS_END
+    fileName = os.path.join(os.path.join(DIR_PATH, WRITH_PATH), outFileName)
     # print fileName
     writeXls = WriteXlsData(mergeData)
     writeXls.wirteDataToXlsFile(fileName)

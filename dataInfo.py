@@ -2,10 +2,7 @@
 import calendar
 import os
 
-FILE_END = "xlsx"
-SEPARATE_SIGN = "."
-WEEK_DAY_NUM = 7
-LAST_MONTH_NUM = 12
+from config import FILE_END, SEPARATE_SIGN, WEEK_DAY_NUM, LAST_MONTH_NUM
 
 '''
 def getFileNameList(start, step=7):

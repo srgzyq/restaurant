@@ -46,6 +46,10 @@ class TestDataInfo(unittest.TestCase):
         # print r
 
     def test_getFormatDate(self):
+        r = getFormatDate(2016,5)
+        for week in r:
+            print week
+        print len(r)
         r = getFormatDate(2016, 4)
         self.assertEquals(len(r), 5)
         self.assertEquals(r[len(r) - 1], ['2016.4.25.xlsx', '2016.4.26.xlsx', '2016.4.27.xlsx',

@@ -22,7 +22,9 @@ class TestBackUpByDropBox(unittest.TestCase):
         pass
 
     def test_uploadFile(self):
+        pass
         self.dropBoxObj.uploadFile("./xlsOne.xls", "/JiJia/5/xlsOne.xls")
+
 
 if __name__ == '__main__':
     unittest.main()
