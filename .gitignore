@@ -2,3 +2,7 @@ data/
 *.xls
 *.xlsx
 *.pyc
+test/mylog.log
+mylog.log
+temp/
+readme.md

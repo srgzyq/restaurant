@@ -5,6 +5,7 @@ CONTENT_KEY = 'content'
 IGNORE_SHEETS = [u'基础信息']
 
 DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据"
+DROPBOX_DIR_PATH="/极加/数据"
 READ_PATH = "原数据"
 WRITH_PATH = "汇总"
 USER_FIRST_NAME = "srgzyq"

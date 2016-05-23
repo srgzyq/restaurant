@@ -1,19 +1,18 @@
 #-*- coding: utf-8 -*-
 import os
 import myLogging
+from config import DIR_PATH, DROPBOX_DIR_PATH
 # 回调函数的写法
 
-DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据"
 
-
-def getAllFileName(path, rs):
-    for fileName in os.listdir(path):
+def getAllFileName(pathName, rs):
+    for fileName in os.listdir(pathName):
 
         # abspathName = os.path.abspath(fileName)
         # print "fileName:"+fileName
 
-        curFileName = os.path.join(path, fileName)
-        print os.path.dirname(curFileName)
+        curFileName = os.path.join(pathName, fileName)
+        # print os.path.dirname(curFileName)
         # print curFileName
         # print abspathName
         # print "is right"+ str(os.path.exists(abspathName))
@@ -45,21 +44,31 @@ def isFileExist(fileNameList):
     return isExis, eixtList
 
 
-def getAbsFileNameList(path):
+def getAbsFileNameList(pathName):
     result = []
-    getAllFileName(path, result)
+    getAllFileName(pathName, result)
     return result
 
 
-def getAllFileNameList(path):
+def getAllFileNameList(pathName):
     pass
 
 
-def oppositeFileNameList(path):
-    result = getAbsFileNameList(path)
+def oppositeFileNameList(pathName):
+    result = getAbsFileNameList(pathName)
     resultOpp = []
     for fileName in result:
         splitDir = fileName.split(DIR_PATH)
         if len(splitDir) == 2:
             resultOpp.append(splitDir[1])
     return resultOpp
+
+
+def getLocalAndDropBoxPath(pathName):
+    result = []
+    oppositeFileList = oppositeFileNameList(pathName)
+    for fileName in oppositeFileList:
+        localPath = DIR_PATH + fileName
+        dropBoxPath = DROPBOX_DIR_PATH + fileName
+        result.append((localPath, dropBoxPath))
+    return result

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
+import re
 from food.readXlsInfo import ReadXlsInfo
 from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
 from dataInfo import getDirFileNameList, getNumWeek
-from tool.dirTool import isFileExist
-import os
-import re
+from tool.dirTool import isFileExist, getLocalAndDropBoxPath
+from tool.saveBackup import BackUpByDropBox
 from time import sleep, strftime
 from config import DIR_PATH, READ_PATH, WRITH_PATH, USER_FIRST_NAME, DATE_RE, FILE_XLS_END, SEPARATE_SIGN
 
@@ -17,6 +18,13 @@ def welcome():
     sleep(1)
     print "Today is: " + strftime("%A %B %d, %Y")
     print "Current time: " + strftime("%H:%M:%S")
+
+
+def upDataToDropBox():
+    dropBoxObj = BackUpByDropBox()
+    rs = getLocalAndDropBoxPath(DIR_PATH)
+    for localName, dropboxName in rs:
+        dropBoxObj.uploadFile(localName, dropboxName)
 
 
 def checkoutCombFileExist(year, month, weekNum):
@@ -70,3 +78,4 @@ def startRestaurant():
 
 if __name__ == '__main__':
     startRestaurant()
+    #upDataToDropBox()
