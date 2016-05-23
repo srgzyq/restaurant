@@ -4,6 +4,7 @@ from food.readXlsInfo import ReadXlsInfo
 from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
 from dataInfo import getDirFileNameList, getNumWeek
+from tool.dirTool import isFileExist
 import os
 import re
 from time import sleep, strftime
@@ -18,10 +19,18 @@ def welcome():
     print "Current time: " + strftime("%H:%M:%S")
 
 
-def combMoreXleToOne(year, month, weekNum):
+def checkoutCombFileExist(year, month, weekNum):
     fileNames = getNumWeek(year, month, weekNum)
     read_xls_file = os.path.join(os.path.join(DIR_PATH, READ_PATH), str(month))
     dirFileNames = getDirFileNameList(fileNames, read_xls_file)
+    isExist, eixtList = isFileExist(dirFileNames)
+    return eixtList, isExist
+
+
+def combMoreXleToOne(year, month, weekNum):
+    dirFileNames, isExist = checkoutCombFileExist(year, month, weekNum)
+    if not isExist:
+        return
 
     comb = CombXlsData()
     for xlsfileName in dirFileNames:
@@ -32,7 +41,6 @@ def combMoreXleToOne(year, month, weekNum):
     mergeData = comb.mergeData()
 
     # 写入文件
-    # DIR_PATH + "汇总/" + "5_3_week.xls"
     outFileName = "_".join([str(month), str(weekNum), "week"]
                            ) + SEPARATE_SIGN + FILE_XLS_END
     fileName = os.path.join(os.path.join(DIR_PATH, WRITH_PATH), outFileName)
@@ -62,4 +70,3 @@ def startRestaurant():
 
 if __name__ == '__main__':
     startRestaurant()
-    #combMoreXleToOne(2016, 5, 3)
