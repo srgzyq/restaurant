@@ -2,13 +2,20 @@
 
 import sys
 import dropbox
+import os
 from dropbox.files import WriteMode
 from dropbox.exceptions import ApiError, AuthError
 import myLogging
+from config import TOKEN_PATH
 
 # Add OAuth2 access token here.
 # You can generate one for yourself in the App Console.
-TOKEN = 'xmrk7xYfbokAAAAAAAAIqZDfqvDcSF932oEg4gnxqsVlGhm9pSYM4CAynzDoPYm5'
+TOKEN = ''
+
+
+def getTokenStr():
+    with open(TOKEN_PATH, 'r') as f:
+        return f.read()
 
 
 class BackUpByDropBox(object):
@@ -22,7 +29,11 @@ class BackUpByDropBox(object):
         # self.files = []
 
     def initDropBoxInfo(self):
-            # Check for an access token
+        global TOKEN
+        if TOKEN == '':
+            TOKEN = getTokenStr()
+
+        # Check for an access token
         if (len(TOKEN) == 0):
             myLogging.logging.error(
                 "Looks like you didn't add your access token.")
@@ -69,12 +80,26 @@ class BackUpByDropBox(object):
                     myLogging.logging.error(err)
                     sys.exit()
 
+    def isFileExist(self, dropboxFileName):
+        folderName, fileName = os.path.split(dropboxFileName)
+        isExist = False
+        result = self.dbx.files_search(folderName, fileName)
+        #print result
+        if len(result.matches) > 0:
+            isExist = True
+        return isExist
+
+    def delFile(self, dropboxFileName):
+        isExist = self.isFileExist(dropboxFileName)
+        if isExist:
+            self.dbx.files_delete(dropboxFileName)
+
     # def get_all_file_and_folder_name(self,path, rs):
-	   #  folders = dbx.files_list_folder(path)
-	   #  for content in folders.entries:
-	   #      if isinstance(content, dropbox.files.FolderMetadata):
-	   #          get_all_file_name(content.path_display, rs)
-	   #          print "folder name:", content.path_display
-	   #      if isinstance(content, dropbox.files.FileMetadata):
-	   #          print "file name", content.name
-	   #          rs.append(content.path_display)
+        #  folders = dbx.files_list_folder(path)
+        #  for content in folders.entries:
+        #      if isinstance(content, dropbox.files.FolderMetadata):
+        #          get_all_file_and_folder_name(content.path_display, rs)
+        #          print "folder name:", content.path_display
+        #      if isinstance(content, dropbox.files.FileMetadata):
+        #          print "file name", content.name
+        #          rs.append(content.path_display)

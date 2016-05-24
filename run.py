@@ -2,6 +2,7 @@
 
 import os
 import re
+import myLogging
 from food.readXlsInfo import ReadXlsInfo
 from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
@@ -24,7 +25,12 @@ def upDataToDropBox():
     dropBoxObj = BackUpByDropBox()
     rs = getLocalAndDropBoxPath(DIR_PATH)
     for localName, dropboxName in rs:
-        dropBoxObj.uploadFile(localName, dropboxName)
+        isExist = dropBoxObj.isFileExist(dropboxName)
+        if isExist:
+            myLogging.logging.info(dropboxName + " is exits")
+        else:
+            dropBoxObj.uploadFile(localName, dropboxName)
+    myLogging.logging.info(DIR_PATH + " all files upload success!")
 
 
 def checkoutCombFileExist(year, month, weekNum):
