@@ -33,6 +33,17 @@ class ReadXlsInfo(object):
         titles = sheet.row_values(0)  # 默认第一行是title
         return titles
 
+    def getXlsSheetsValueType(self, name):
+        sheet = self.xls_file.sheet_by_name(name)
+        #print "getXlsSheetsValueType",name
+        #print sheet.row_values(1)
+        try :
+            types = sheet.row_types(1)
+        except IndexError:
+            types = [0] * len(sheet.row_values(0))
+        #types = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        return types
+
     def getXlsSheetsContent(self, name):
         sheet = self.xls_file.sheet_by_name(name)
         line_contents = []

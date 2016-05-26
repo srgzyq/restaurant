@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from config import TITLE_KEY, CONTENT_KEY
+from config import TITLE_KEY, CONTENT_KEY, TYPE_KEY
 import myLogging
 
 
@@ -34,7 +34,8 @@ class CombXlsData(object):
         xlsData = self.doMergeData[0]
         for sheetKey in xlsData.getXlsSheetsName():
             if result.get(sheetKey) is None:
-                result[sheetKey] = {TITLE_KEY: [], CONTENT_KEY: []}
+                result[sheetKey] = {TITLE_KEY: [],
+                                    CONTENT_KEY: [], TYPE_KEY: []}
 
     def initTableTitleInfo(self):
         result = self.result
@@ -43,6 +44,7 @@ class CombXlsData(object):
         xlsData = self.doMergeData[0]
         for sheetKey, sheetInfo in result.items():
             sheetInfo[TITLE_KEY] = xlsData.getXlsSheetsTitle(sheetKey)
+            sheetInfo[TYPE_KEY] = xlsData.getXlsSheetsValueType(sheetKey)
 
     def mergeTableContent(self):
         result = self.result
@@ -58,4 +60,5 @@ class CombXlsData(object):
 
                 for line in sheetContents:
                     lines.append(line)
-            myLogging.logging.info("Merge xls file in Dic:"+xlsData.getFileName()+" succeed.")
+            myLogging.logging.info(
+                "Merge xls file in Dic:" + xlsData.getFileName() + " succeed.")

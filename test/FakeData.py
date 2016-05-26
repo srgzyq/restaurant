@@ -10,15 +10,17 @@ xlsInfoTwo = ReadXlsInfo("./xlsTwo.xls")
 xlsOne = {
     "user":
     {
-        "title": ["date", "people", "income","company"],
+        "title": ["date", "people", "income", "company"],
+        "ctype": [3, 2, 2, 1],
         "content":
-        [["2016/4/25", 4, 300,'didi'], ["2016/4/25", 2, 215,'other'], ["2016/4/25", 4, 300,'yaxin']]
+        [[42472, 4, 300, 'didi'], [42472, 2, 215, 'other'], [42473, 4, 300, 'yaxin']]
     },
     "member":
     {
         "title": ["date", "num", "income"],
+        "ctype": [3, 2, 2],
         "content":
-        [["2016/4/25", 1, 20], ["2016/4/25", 2, 40],["2016/4/25", 2, 40]]
+        [[42472, 1, 20], [42472, 2, 40], [42473, 2, 40]]
     }
 }
 
@@ -26,14 +28,16 @@ xlsOne = {
 xlsTow = {
     "user":
     {
-        "title": ["date", "people", "income","company"],
+        "title": ["date", "people", "income", "company"],
+        "ctype": [3, 2, 2, 1],
         "content":
-        [["2016/4/26", 1, 12], ["2016/4/26", 8, 600], ["2016/4/26", 2, 180]]
+        [[42472, 1, 12], [42472, 8, 600], [42472, 2, 180]]
     },
     "member":
     {
         "title": ["date", "num", "income"],
+        "ctype": [3, 2, 2],
         "content":
-        [["2016/4/26", 4, 80]]
+        [[42470, 4, 80]]
     }
 }

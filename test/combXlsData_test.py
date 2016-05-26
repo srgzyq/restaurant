@@ -2,8 +2,8 @@ import unittest
 import FakeData
 
 # -*- coding: utf-8 -*-
-#import sys
-#sys.path.append("..")
+# import sys
+# sys.path.append("..")
 
 from food.combXlsData import CombXlsData
 
@@ -32,6 +32,8 @@ class TestCombXlsData(unittest.TestCase):
         self.assertTrue(u'member' in self.result)
 
     def test_initTableTitleInfo(self):
+        self.assertTrue(self.result[u'income']['ctype'][0], 3)
+        self.assertTrue(self.result[u'member']['ctype'][0], 3)
         self.assertTrue('title' in self.result[u'income'])
         self.assertTrue('title' in self.result[u'member'])
         self.assertTrue('company'in self.result[u'income'][u'title'])

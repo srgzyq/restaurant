@@ -2,6 +2,7 @@
 
 TITLE_KEY = 'title'
 CONTENT_KEY = 'content'
+TYPE_KEY = 'ctype'
 IGNORE_SHEETS = [u'基础信息']
 TOKEN_PATH = "/Users/playcrab/myGithub/restaurant/tool/token"
 
@@ -18,3 +19,4 @@ FILE_XLS_END = "xls"
 SEPARATE_SIGN = "."
 WEEK_DAY_NUM = 7
 LAST_MONTH_NUM = 12
+XL_CELL_DATE = 3

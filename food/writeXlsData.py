@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from xlwt import Workbook, XFStyle
-from config import TITLE_KEY, CONTENT_KEY
+from xlwt import Workbook, XFStyle, easyxf
+from config import TITLE_KEY, CONTENT_KEY, TYPE_KEY, XL_CELL_DATE
 import myLogging
+
+style_date = easyxf(num_format_str='YY/MM/DD')
+
 
 class WriteXlsData(object):
 
@@ -21,11 +24,14 @@ class WriteXlsData(object):
             sheetTitle = sheetData[TITLE_KEY]
             # content
             sheetContent = sheetData[CONTENT_KEY]
+            # type
+            sheetTypes = sheetData[TYPE_KEY]
+
             self.initSheetTitle(xlsSheet, sheetTitle)
-            self.initSheetContent(xlsSheet, sheetContent)
+            self.initSheetContent(xlsSheet, sheetContent, sheetTypes)
 
         xlsData.save(fileName)
-        myLogging.logging.info("Save xls file:"+fileName+" succeed.")
+        myLogging.logging.info("Save xls file:" + fileName + " succeed.")
 
     def initSheetTitle(self, xlsSheet, sheetTitle):
         # 初始化每一个 sheet title 内容
@@ -33,11 +39,15 @@ class WriteXlsData(object):
             xlsSheet.write(0, col, value)
         return xlsSheet
 
-    def initSheetContent(self, xlsSheet, sheetContent):
+    def initSheetContent(self, xlsSheet, sheetContent, sheetTypes):
         # 第一行开始
         rows = len(sheetContent)
         for index in range(rows):
             row = index + 1
             rowValue = sheetContent[index]
             for col, value in enumerate(rowValue):
-                xlsSheet.write(row, col, value)
+                #xlsSheet.write(row, col, value)
+                if XL_CELL_DATE == sheetTypes[col]:
+                    xlsSheet.write(row, col, value, style_date)
+                else:
+                    xlsSheet.write(row, col, value)
