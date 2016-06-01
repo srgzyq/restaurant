@@ -62,6 +62,8 @@ def combMoreXleToOne(year, month, weekNum):
     writeXls = WriteXlsData(mergeData)
     writeXls.wirteDataToXlsFile(fileName)
 
+# 执行:proxychains4 python
+
 
 def startRestaurant():
     welcome()
@@ -83,5 +85,5 @@ def startRestaurant():
             start = False
 
 if __name__ == '__main__':
-    startRestaurant()
-    #upDataToDropBox()
+    # startRestaurant()
+    upDataToDropBox()

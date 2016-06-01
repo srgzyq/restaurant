@@ -38,6 +38,9 @@ class TestBackUpByDropBox(unittest.TestCase):
         self.assertTrue(isExit)
         isExit = self.dropBoxObj.isFileExist(u"/Test/2016.5.11.xlsx")
         self.assertTrue(not isExit)
+        #isExit = self.dropBoxObj.isFileExist(u"/极加/数据/汇总/5_5_week.xls")
+        #print "isExit=========",isExit
+        #self.assertTrue(isExit)
 
     def test_delFile(self):
         pass

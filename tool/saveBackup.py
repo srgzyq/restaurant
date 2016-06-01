@@ -84,9 +84,16 @@ class BackUpByDropBox(object):
         folderName, fileName = os.path.split(dropboxFileName)
         isExist = False
         result = self.dbx.files_search(folderName, fileName)
-        #print result
-        if len(result.matches) > 0:
+        #print "dropboxFileName=====",dropboxFileName
+        #print "result=====",result
+        if len(result.matches) > 0 and result.matches[0].metadata.name == fileName:
+            #print "fileName =========", fileName
+            #print "result.matches===========",result.matches[0].metadata.name
+            #print "result path=======",result.matches[0].metadata.path_lower
+            #print "isExist======",result.matches[0].metadata.path_lower == dropboxFileName
+
             isExist = True
+
         return isExist
 
     def delFile(self, dropboxFileName):
