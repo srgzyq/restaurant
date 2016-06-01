@@ -12,7 +12,7 @@ class CombXlsData(object):
     def __init__(self):
         super(CombXlsData, self).__init__()
         self.doMergeData = []
-        self.result = {}
+        self.result = []  # {}
 
     def setXlsData(self, xlsData):
         assert xlsData is not None, "xls Data is None"
@@ -28,23 +28,31 @@ class CombXlsData(object):
         return self.result
 
     def initTableInfo(self):
-        result = self.result
         # 合并xls结构一致，取出第一个即可
         assert len(self.doMergeData) > 0, "doMergeData not have value"
         xlsData = self.doMergeData[0]
         for sheetKey in xlsData.getXlsSheetsName():
-            if result.get(sheetKey) is None:
-                result[sheetKey] = {TITLE_KEY: [],
-                                    CONTENT_KEY: [], TYPE_KEY: []}
+            dicSheetInfo = {"name": sheetKey, TITLE_KEY: [],
+                            CONTENT_KEY: [], TYPE_KEY: []}
+            self.result.append(dicSheetInfo)
 
     def initTableTitleInfo(self):
         result = self.result
         # 合并xls结构一致，取出第一个即可
         assert len(self.doMergeData) > 0, "doMergeData not have value"
         xlsData = self.doMergeData[0]
-        for sheetKey, sheetInfo in result.items():
+        for sheetInfo in result:
+            sheetKey = sheetInfo["name"]
             sheetInfo[TITLE_KEY] = xlsData.getXlsSheetsTitle(sheetKey)
             sheetInfo[TYPE_KEY] = xlsData.getXlsSheetsValueType(sheetKey)
+
+    def getSheetContentList(self, sheetName, result):
+        lines = []
+        for sheetInfo in result:
+            if sheetInfo["name"] == sheetName:
+                lines = sheetInfo[CONTENT_KEY]
+                break
+        return lines
 
     def mergeTableContent(self):
         result = self.result
@@ -53,7 +61,7 @@ class CombXlsData(object):
             sheetDatas = xlsData.getXlsSheetsInfo()
             for sheetName, sheetContents in sheetDatas:
                 try:
-                    lines = result[sheetName][CONTENT_KEY]
+                    lines = self.getSheetContentList(sheetName, result)
                 except KeyError:
                     myLogging.logging.error(
                         "fileName:" + xlsData.getFileName() + " sheetName is error: " + sheetName)

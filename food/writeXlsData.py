@@ -17,9 +17,9 @@ class WriteXlsData(object):
     # 写入
     def wirteDataToXlsFile(self, fileName):
         xlsData = Workbook()
-        for sheetName, sheetData in self.data.items():
+        for sheetData in self.data:
             # sheet
-            xlsSheet = xlsData.add_sheet(sheetName)
+            xlsSheet = xlsData.add_sheet(sheetData["name"])
             # title
             sheetTitle = sheetData[TITLE_KEY]
             # content
