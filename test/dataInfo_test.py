@@ -1,11 +1,10 @@
-import unittest
-
-
 # -*- coding: utf-8 -*-
-#import sys
+# import sys
 # sys.path.append("..")
-
-from dataInfo import getWeekInfoList, getAllWeekInfoList, getFormatDate
+import os
+import unittest
+from dataInfo import *
+from config import DIR_PATH, READ_PATH
 
 
 class TestDataInfo(unittest.TestCase):
@@ -45,11 +44,18 @@ class TestDataInfo(unittest.TestCase):
         self.assertEquals(r[len(r) - 1], [25, 26, 27, 28, 29, 30, 31])
         # print r
 
+    def test_getDirFileNameList(self):
+        fileNames = getNumWeek(2016, 5, 6)
+        read_xls_file = os.path.join(DIR_PATH, READ_PATH)
+        dirFileNames = getDirFileNameList(fileNames, read_xls_file)
+        self.assertTrue('6/2016.6.2.xlsx' in dirFileNames[3])
+        self.assertTrue('6/2016.6.1.xlsx' in dirFileNames[2])
+
     def test_getFormatDate(self):
-        r = getFormatDate(2016,5)
-        for week in r:
-            print week
-        print len(r)
+        r = getFormatDate(2016, 5)
+        # for week in r:
+        #    print week
+        # print len(r)
         r = getFormatDate(2016, 4)
         self.assertEquals(len(r), 5)
         self.assertEquals(r[len(r) - 1], ['2016.4.25.xlsx', '2016.4.26.xlsx', '2016.4.27.xlsx',

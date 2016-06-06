@@ -28,10 +28,17 @@ def getFileNameList(start, step=7):
 def getDirFileNameList(fileList, dirName):
     result = []
     for fileName in fileList:
-        result.append(os.path.join(dirName, fileName))
+        monthNum = getMonthNumber(fileName)
+        pathName = os.path.join(dirName, monthNum)
+        result.append(os.path.join(pathName, fileName))
     return result
 
 # 周月按照周日划分日期
+
+
+def getMonthNumber(fileName):
+    dateList = fileName.split('.')  # ['2016', '5', '30', 'xlsx']
+    return dateList[1]  # month
 
 
 def getWeekInfoList(year, month):

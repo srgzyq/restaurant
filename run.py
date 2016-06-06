@@ -35,7 +35,7 @@ def upDataToDropBox():
 
 def checkoutCombFileExist(year, month, weekNum):
     fileNames = getNumWeek(year, month, weekNum)
-    read_xls_file = os.path.join(os.path.join(DIR_PATH, READ_PATH), str(month))
+    read_xls_file = os.path.join(DIR_PATH, READ_PATH)
     dirFileNames = getDirFileNameList(fileNames, read_xls_file)
     isExist, eixtList = isFileExist(dirFileNames)
     return eixtList, isExist
@@ -85,5 +85,5 @@ def startRestaurant():
             start = False
 
 if __name__ == '__main__':
-    # startRestaurant()
-    upDataToDropBox()
+    startRestaurant()
+    #upDataToDropBox()
