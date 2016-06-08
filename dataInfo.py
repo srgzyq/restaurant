@@ -2,27 +2,8 @@
 import calendar
 import os
 
-from config import FILE_END, SEPARATE_SIGN, WEEK_DAY_NUM, LAST_MONTH_NUM
-
-'''
-def getFileNameList(start, step=7):
-    datelist = start.split(".")
-    year = int(datelist[0])
-    month = int(datelist[1])
-    day = int(datelist[2]) - 1
-    monthRange = calendar.monthrange(year, month)
-    result = []
-
-    for num in range(step):
-        day += 1
-        if day > monthRange[1]:
-            day = 1
-            month += 1
-
-        datestr = ".".join([str(year), str(month), str(day), FILE_END])
-        result.append(datestr)
-    return result
-'''
+from config import *
+from tool.dirTool import isFileExist
 
 
 def getDirFileNameList(fileList, dirName):
@@ -33,7 +14,13 @@ def getDirFileNameList(fileList, dirName):
         result.append(os.path.join(pathName, fileName))
     return result
 
-# 周月按照周日划分日期
+
+def checkoutCombFileExist(year, month, weekNum):
+    fileNames = getNumWeek(year, month, weekNum)
+    read_xls_file = os.path.join(DIR_PATH, READ_PATH)
+    dirFileNames = getDirFileNameList(fileNames, read_xls_file)
+    isExist, eixtList = isFileExist(dirFileNames)
+    return eixtList, isExist
 
 
 def getMonthNumber(fileName):

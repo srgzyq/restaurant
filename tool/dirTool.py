@@ -72,3 +72,11 @@ def getLocalAndDropBoxPath(pathName):
         dropBoxPath = DROPBOX_DIR_PATH + fileName
         result.append((localPath, dropBoxPath))
     return result
+
+
+def changeLocalToDropBox(localName):
+    splitDir = localName.split(DIR_PATH)
+    dropBoxPath = None
+    if len(splitDir) == 2:
+        dropBoxPath = DROPBOX_DIR_PATH + splitDir[1]
+    return dropBoxPath

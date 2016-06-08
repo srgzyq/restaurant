@@ -6,11 +6,12 @@ import myLogging
 from food.readXlsInfo import ReadXlsInfo
 from food.combXlsData import CombXlsData
 from food.writeXlsData import WriteXlsData
-from dataInfo import getDirFileNameList, getNumWeek
-from tool.dirTool import isFileExist, getLocalAndDropBoxPath
+from dataInfo import checkoutCombFileExist
+from tool.dirTool import getLocalAndDropBoxPath
 from tool.saveBackup import BackUpByDropBox
 from time import sleep, strftime
-from config import DIR_PATH, READ_PATH, WRITH_PATH, USER_FIRST_NAME, DATE_RE, FILE_XLS_END, SEPARATE_SIGN
+from config import *
+import subprocess
 
 
 def welcome():
@@ -21,24 +22,16 @@ def welcome():
     print "Current time: " + strftime("%H:%M:%S")
 
 
-def upDataToDropBox():
-    dropBoxObj = BackUpByDropBox()
-    rs = getLocalAndDropBoxPath(DIR_PATH)
-    for localName, dropboxName in rs:
-        isExist = dropBoxObj.isFileExist(dropboxName)
-        if isExist:
-            myLogging.logging.info(dropboxName + " is exits")
-        else:
-            dropBoxObj.uploadFile(localName, dropboxName)
-    myLogging.logging.info(DIR_PATH + " all files upload success!")
-
-
-def checkoutCombFileExist(year, month, weekNum):
-    fileNames = getNumWeek(year, month, weekNum)
-    read_xls_file = os.path.join(DIR_PATH, READ_PATH)
-    dirFileNames = getDirFileNameList(fileNames, read_xls_file)
-    isExist, eixtList = isFileExist(dirFileNames)
-    return eixtList, isExist
+# def upDataToDropBox():
+#     dropBoxObj = BackUpByDropBox()
+#     rs = getLocalAndDropBoxPath(DIR_PATH)
+#     for localName, dropboxName in rs:
+#         isExist = dropBoxObj.isFileExist(dropboxName)
+#         if isExist:
+#             myLogging.logging.info(dropboxName + " is exits")
+#         else:
+#             dropBoxObj.uploadFile(localName, dropboxName)
+#     myLogging.logging.info(DIR_PATH + " all files upload success!")
 
 
 def combMoreXleToOne(year, month, weekNum):
@@ -62,8 +55,6 @@ def combMoreXleToOne(year, month, weekNum):
     writeXls = WriteXlsData(mergeData)
     writeXls.wirteDataToXlsFile(fileName)
 
-# 执行:proxychains4 python
-
 
 def startRestaurant():
     welcome()
@@ -76,6 +67,13 @@ def startRestaurant():
             if re.match(DATE_RE, yearInfo):
                 year, month, weekNum = yearInfo.split("/")
                 combMoreXleToOne(int(year), int(month), int(weekNum))
+
+                # 执行:proxychains4 python
+                yes_backup = raw_input('Is upload current file (yes or no)? ')
+                if yes_backup.strip().lower() == 'yes':
+                    cmd = "proxychains4 python upLoadFile.py " + yearInfo
+                    subprocess.call([cmd], shell=True)
+
         elif user_choice == 'B':
             pass
         elif user_choice == 'X':
@@ -86,4 +84,4 @@ def startRestaurant():
 
 if __name__ == '__main__':
     startRestaurant()
-    #upDataToDropBox()
+    # upDataToDropBox()

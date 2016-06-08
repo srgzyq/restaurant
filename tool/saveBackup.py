@@ -83,16 +83,24 @@ class BackUpByDropBox(object):
     def isFileExist(self, dropboxFileName):
         folderName, fileName = os.path.split(dropboxFileName)
         isExist = False
-        result = self.dbx.files_search(folderName, fileName)
-        #print "dropboxFileName=====",dropboxFileName
-        #print "result=====",result
-        if len(result.matches) > 0 and result.matches[0].metadata.name == fileName:
-            #print "fileName =========", fileName
-            #print "result.matches===========",result.matches[0].metadata.name
-            #print "result path=======",result.matches[0].metadata.path_lower
-            #print "isExist======",result.matches[0].metadata.path_lower == dropboxFileName
+        try:
+            result = self.dbx.files_search(folderName, fileName)
+            # print "dropboxFileName=====",dropboxFileName
+            # print "result=====",result
+            if len(result.matches) > 0 and result.matches[0].metadata.name == fileName:
+                # print "fileName =========", fileName
+                # print "result.matches===========",result.matches[0].metadata.name
+                # print "result path=======",result.matches[0].metadata.path_lower
+                # print "isExist======",result.matches[0].metadata.path_lower
+                # == dropboxFileName
 
-            isExist = True
+                isExist = True
+        except dropbox.exceptions.ApiError as err:
+            myLogging.logging.info(
+                "fileName " + fileName + ' is not in dropbox')
+            #print('*** API error', err)
+            # print err[1]
+            #lookup = err[1].get_path().not_found
 
         return isExist
 

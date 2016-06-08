@@ -45,8 +45,16 @@ class WriteXlsData(object):
         for index in range(rows):
             row = index + 1
             rowValue = sheetContent[index]
+            #print rowValue
+            #for v in rowValue:
+            #    print v
+            #print len(rowValue)
+            assert len(rowValue) == 12, 'xsl 格式不规划'
             for col, value in enumerate(rowValue):
                 #xlsSheet.write(row, col, value)
+                #print "rowValue====",rowValue
+                #print "col====",col
+                #print "sheetTypes===",sheetTypes
                 if XL_CELL_DATE == sheetTypes[col]:
                     xlsSheet.write(row, col, value, style_date)
                 else:
