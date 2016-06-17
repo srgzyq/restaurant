@@ -7,3 +7,4 @@ mylog.log
 temp/
 readme.md
 tool/token
+*.db
