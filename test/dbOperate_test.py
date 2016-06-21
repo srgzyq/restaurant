@@ -6,8 +6,8 @@ Created on 2016-06-17 11:29:50
 '''
 
 import unittest
-from data.dbOperate import DBOperate, ReTableOperate
-from data.sqlConfig import *
+from model.dbOperate import DBOperate, ReTableOperate
+from model.sqlConfig import *
 import os
 
 
@@ -40,9 +40,16 @@ class TestReTableOperate(unittest.TestCase):
         dbName = "testBaseData.db"
         redb = ReTableOperate(dbName)
         redb.initTables(tableName, tableSql)
-        #tname = tableName[0]
-        #tsql = tableSql[0]
-        #redb.createTable(tname, tsql)
+        redb.closeDbCon()
+
+    def test_insertDayTables(self):
+        rows = [('2016/5/1', 8, 3, 1, 0, 1, 170.0, 0, 0, '1,2', ''),
+                ('2016/5/1', 8, 3, 1, 0, 1, 100.0, 0, 0, '1,2', ''),
+                ('2016/5/2', 8, 3, 1, 0, 1, 170.0, 0, 0, '1,2', ''),
+                ('2016/5/2', 8, 3, 1, 0, 1, 170.0, 0, 0, '1', '')]
+        dbName = "testBaseData.db"
+        redb = ReTableOperate(dbName)
+        redb.insertDayBaseTables(insertDayBaseStr, rows)
         redb.closeDbCon()
 
 

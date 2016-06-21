@@ -35,6 +35,10 @@ class DBOperate(object):
         # 提交事务
         self.conn.commit()
 
+    def executeManySql(self, sql, rows):
+        self.cursor.executemany(sql, rows)
+        self.conn.commit()
+
     def closeDbCon(self):
         # 关闭cursor
         self.cursor.close()
@@ -50,3 +54,6 @@ class ReTableOperate(DBOperate):
     def initTables(self, tableNames, sqls):
         for index in range(len(tableNames)):
             self.createTable(tableNames[index], sqls[index])
+
+    def insertDayBaseTables(self, sql, rows):
+        self.executeManySql(sql, rows)
