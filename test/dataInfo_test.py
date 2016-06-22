@@ -17,6 +17,9 @@ class TestDataInfo(unittest.TestCase):
         # print "tearDown.."
         pass
 
+    def test_getYamlConfig(self):
+        getYamlConfig()
+
     def test_getWeekInfoList(self):
         # print "test_getWeekInfoList.."
         w = getWeekInfoList(2016, 5)
@@ -64,6 +67,11 @@ class TestDataInfo(unittest.TestCase):
         self.assertEquals(r[4], ['2015.12.28.xlsx', '2015.12.29.xlsx', '2015.12.30.xlsx',
                                  '2015.12.31.xlsx', '2016.1.1.xlsx', '2016.1.2.xlsx', '2016.1.3.xlsx'])
 
+    def test_changeXlsDateToStr(self):
+        strD = changeXlsDateToStr(42543)
+        self.assertEquals(strD, '2016/06/22')
+        strD = changeXlsDateToStr(42499.0)
+        self.assertEquals(strD, '2016/05/09')
 
 if __name__ == '__main__':
     unittest.main()

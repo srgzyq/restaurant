@@ -11,7 +11,8 @@ class ReadXlsInfo(object):
         try:
             self.file_name = file_name
             self.xls_file = open_workbook(file_name)
-            myLogging.logging.info("Read xls file from: " + file_name + " succeed.")
+            myLogging.logging.info(
+                "Read xls file from: " + file_name + " succeed.")
         except IOError:
             # 日志输出:
             myLogging.logging.error("No such file or directory: " + file_name)
@@ -35,9 +36,9 @@ class ReadXlsInfo(object):
 
     def getXlsSheetsValueType(self, name):
         sheet = self.xls_file.sheet_by_name(name)
-        #print "getXlsSheetsValueType",name
-        #print sheet.row_values(1)
-        try :
+        # print "getXlsSheetsValueType",name
+        # print sheet.row_values(1)
+        try:
             types = sheet.row_types(1)
         except IndexError:
             types = [0] * len(sheet.row_values(0))
@@ -62,3 +63,15 @@ class ReadXlsInfo(object):
             result.append((name, self.getXlsSheetsContent(name)))
 
         return result
+
+
+class ReadXlsFormat(ReadXlsInfo):
+
+    def __init__(self, file_name):
+        super(ReadXlsFormat, self).__init__(file_name)
+
+    def formatContent(self, name):
+        sheet = self.xls_file.sheet_by_name(name)
+        for line_num in range(1, sheet.nrows):
+            line_content = sheet.row_values(line_num)
+            print line_content

@@ -4,6 +4,22 @@ import os
 
 from config import *
 from tool.dirTool import isFileExist
+from datetime import datetime
+from datetime import timedelta
+import yaml
+
+
+def changeXlsDateToStr(dateNum):
+    baseDay = datetime(1899, 12, 30)
+    changeDay = baseDay + timedelta(days=+dateNum)
+    dayStr = changeDay.strftime("%Y/%m/%d")
+    return dayStr
+
+
+def getYamlConfig():
+    confFile = open(XLSANDDB_YAML_CON)
+    confData = yaml.load(confFile)
+    print confData
 
 
 def getDirFileNameList(fileList, dirName):
