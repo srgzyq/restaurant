@@ -2,6 +2,7 @@
 from xlrd import open_workbook
 from config import IGNORE_SHEETS
 import myLogging
+from dataInfo import getYamlConfig, changeXlsDateToStr
 
 
 class ReadXlsInfo(object):
@@ -69,9 +70,32 @@ class ReadXlsFormat(ReadXlsInfo):
 
     def __init__(self, file_name):
         super(ReadXlsFormat, self).__init__(file_name)
+        self.xlsStrInfoDic = getYamlConfig('XLSTITLE')
 
     def formatContent(self, name):
         sheet = self.xls_file.sheet_by_name(name)
+        titles = self.getXlsSheetsTitle(name)
         for line_num in range(1, sheet.nrows):
             line_content = sheet.row_values(line_num)
-            print line_content
+            self.resolutionContent(line_content, titles)
+            # print line_content
+
+    def resolutionContent(self, line_content, titles):
+        sqlCont = []
+        print '------------'
+        for title in titles:
+
+            infoData = self.xlsStrInfoDic[title]
+            index = infoData['index']
+            ctype = infoData['type']
+            if index >= 0:
+                value = line_content[index]
+                if ctype == 'date':
+                    value = changeXlsDateToStr(value)
+                if value is '':
+                    value = 1
+
+                sqlCont.append(value)
+
+        print tuple(sqlCont)
+        print '------------'

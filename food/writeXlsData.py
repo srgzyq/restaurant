@@ -49,7 +49,7 @@ class WriteXlsData(object):
             #for v in rowValue:
             #    print v
             #print len(rowValue)
-            assert len(rowValue) == 12, 'xsl 格式不规划'
+            assert len(rowValue) == 12 or len(rowValue) == 13, 'xsl 格式不规划'
             for col, value in enumerate(rowValue):
                 #xlsSheet.write(row, col, value)
                 #print "rowValue====",rowValue

@@ -16,10 +16,10 @@ def changeXlsDateToStr(dateNum):
     return dayStr
 
 
-def getYamlConfig():
+def getYamlConfig(key):
     confFile = open(XLSANDDB_YAML_CON)
     confData = yaml.load(confFile)
-    print confData
+    return confData[key]
 
 
 def getDirFileNameList(fileList, dirName):

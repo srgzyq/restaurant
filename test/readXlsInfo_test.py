@@ -35,7 +35,7 @@ class TestReadXlsFormat(unittest.TestCase):
         incomeXls = ReadXlsFormat("./income.xlsx")
         sheetNames = incomeXls.getXlsSheetsName()
         incomeXls.formatContent(sheetNames[0])
-        #print sheetNames[0]
+        # print sheetNames[0]
 
 
 if __name__ == '__main__':

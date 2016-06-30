@@ -1,3 +1,62 @@
 DINNER:
    中餐: 1
    晚餐: 2
+
+XLSTITLE:
+   日期:
+       index: 0
+       type: 'date'
+       default: '2016/1/1'
+   星期:
+       index: -1
+       type: 'date'
+   桌号:
+       index: 2
+       type: 'int'
+       default: 0
+   人数:
+       index: 3
+       type: 'int'
+       default: 0
+   用餐类型:
+       index: 4
+       type: 'int'
+   客户类型:
+       index: 5
+       type: 'int'
+   会员:
+       index: 6
+       type: 'int'
+   客户来源:
+       index: 7
+       type: 'int'
+   支付类型:
+       index: 8
+       type: 'int'
+   流水:
+       index: 9
+       type: 'float'
+   优惠:
+       index: 10
+       type: 'int'
+   发票:
+       index: 11
+       type: 'int'
+   备注:
+       index: 12
+       type: 'str'
+
+SORTINDEX:
+   日期: 0
+   星期: -1
+   桌号: 2
+   人数: 3
+   用餐类型: 4
+   客户类型: 5
+   会员: 6
+   客户来源: 7
+   支付类型: 8
+   流水: 9
+   优惠: 10
+   发票: 11
+   备注: 12

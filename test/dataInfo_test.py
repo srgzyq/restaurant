@@ -18,7 +18,9 @@ class TestDataInfo(unittest.TestCase):
         pass
 
     def test_getYamlConfig(self):
-        getYamlConfig()
+        yamlConfig = getYamlConfig('XLSTITLE')
+        #print yamlConfig
+        self.assertEquals(yamlConfig[u'日期']['index'], 0)
 
     def test_getWeekInfoList(self):
         # print "test_getWeekInfoList.."
