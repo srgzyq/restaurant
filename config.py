@@ -4,9 +4,9 @@ TITLE_KEY = 'title'
 CONTENT_KEY = 'content'
 TYPE_KEY = 'ctype'
 IGNORE_SHEETS = [u'基础信息']
-TOKEN_PATH = "/Users/playcrab/myGithub/restaurant/tool/token"
+TOKEN_PATH = "/Users/xxxx/myGithub/restaurant/tool/token"
 
-DIR_PATH = "/Users/playcrab/工作/自我文档总结/极加/数据"
+DIR_PATH = "/Users/xxxx/工作/自我文档总结/极加/数据"
 DROPBOX_DIR_PATH = "/极加/数据"
 READ_PATH = "原数据"
 WRITH_PATH = "汇总"
