@@ -29,7 +29,7 @@ class TestBackUpByDropBox(unittest.TestCase):
             self.dropBoxObj.delFile(fileName)
 
         self.dropBoxObj.uploadFile(
-            u"/Users/playcrab/工作/自我文档总结/极加/数据/模板/模板.xlsx", fileName)
+            u"/Users/xxxx/工作/自我文档总结/极加/数据/模板/模板.xlsx", fileName)
 
         self.assertTrue(self.dropBoxObj.isFileExist(fileName))
 
